@@ -16,6 +16,12 @@ class CourseScheduleTests(unittest.TestCase):
         self.assertTrue(solver.canFinish(4, prerequisites))
         self.assertTrue(solver.isPossible(4, prerequisites))
 
+    def test_solution_compatibility_methods_with_cycle(self):
+        solver = Solution()
+        prerequisites = [[1, 0], [0, 1]]
+        self.assertFalse(solver.canFinish(2, prerequisites))
+        self.assertFalse(solver.isPossible(2, prerequisites))
+
 
 if __name__ == "__main__":
     unittest.main()
