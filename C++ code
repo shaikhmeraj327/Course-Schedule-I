@@ -1,0 +1,37 @@
+class Solution {
+  public:
+    vector<int> findOrder(int n, vector<vector<int>> &prerequisites) {
+        // code here
+        vector<int>ans;
+        vector<vector<int>>adj(n);
+        vector<int>indegree(n);
+        for(int i=0;i<prerequisites.size();i++){
+            int u=prerequisites[i][0];
+            int v=prerequisites[i][1];
+            adj[u].push_back(v);
+            indegree[v]++;
+        }
+        queue<int>q;
+        for(int i=0;i<n;i++){
+            if(indegree[i]==0)q.push(i);
+        }
+        int count=0;
+        while(!q.empty()){
+            int front=q.front();
+            q.pop();
+            ans.push_back(front);
+            count++;
+            for(int num:adj[front]){
+                indegree[num]--;
+                if(indegree[num]==0)q.push(num);
+            }
+        }
+        
+        // check circle ->then not possible ->we return empty array
+        if(count<n)return {};
+        // reverse the order to get the required answer
+        reverse(ans.begin(),ans.end());
+        return ans;
+        
+    }
+};
